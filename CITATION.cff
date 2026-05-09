@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "Raw IQ Dataset and URH Settings for: Reverse Engineering of a Commercial 2.4 GHz RC Toy Car Using Software Defined Radio"
+message: "If you use this dataset, please cite the accompanying paper."
+type: dataset
+authors:
+  - family-names: "Ro"
+    given-names: "Meitou"
+    affiliation: "Tokyo City University"
+  - family-names: "Zhu"
+    given-names: "Jinxiao"
+    affiliation: "Tokyo Denki University"
+license: CC-BY-4.0
+date-released: 2026-05-10
+keywords:
+  - software-defined radio
+  - SDR
+  - HackRF
+  - URH
+  - wireless protocol reverse engineering
+  - replay attack
+  - 2.4 GHz
+preferred-citation:
+  type: article
+  title: "ソフトウェア無線を用いた市販 2.4 GHz 車型玩具のリバースエンジニアリング (Reverse Engineering of a Commercial 2.4 GHz RC Toy Car Using Software Defined Radio)"
+  authors:
+    - family-names: "Ro"
+      given-names: "Meitou"
+    - family-names: "Zhu"
+      given-names: "Jinxiao"
+  journal: "IEICE Transactions on Communications (D)"
+  year: 2026

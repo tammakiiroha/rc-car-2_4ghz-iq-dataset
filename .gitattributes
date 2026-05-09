@@ -1,0 +1,12 @@
+# Treat binary IQ recordings as binary (do not run line-ending or diff transforms)
+*.complex16s binary
+*.complex     binary
+*.cfile       binary
+*.iq          binary
+*.sigmf-data  binary
+
+# Optional: track via Git LFS (recommended for repositories that will accumulate
+# many or larger captures). Enable by installing git-lfs and running:
+#   git lfs install
+#   git lfs track "*.complex16s"
+# After tracking, commit `.gitattributes` and add files normally.
