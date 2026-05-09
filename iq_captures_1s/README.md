@@ -1,54 +1,54 @@
-# iq_captures_1s/ — Primary Raw IQ Recordings (HackRF)
+# iq_captures_1s/ — HackRF 主録音 / Primary Raw IQ Recordings
 
-## What this folder contains
+## このフォルダの内容 / What this folder contains
+
+論文で評価した 5 つの操作について、**HackRF One** で 2.475 GHz を約 1 秒ずつ録音した
+生 IQ データ（論文 表 1: `取得長 ≈ 1 s/操作`、`フレーム数 ≈ 50 frame/操作`）。
+
+各ファイル = 正規リモコンを ~1 秒押下しながら HackRF で受信し、`.complex16s` として保存。
+1 ファイル内に **24-byte 完全フレームを複数含む**（論文 §4.1）。
 
 Raw IQ data recorded with **HackRF One** for the 5 operations evaluated in the paper.
-論文 表1 lists `取得長 ≈ 1 s/操作` (recording length ≈ 1 s per operation) and `フレーム数 ≈ 50 frame/操作`
-(approximately 50 frames per recording) — these files are exactly that data.
+Each file is ~1 s of capture at 2.475 GHz containing multiple complete 24-byte frames.
 
-Each file = press a key on the legitimate remote for ~1 s while HackRF receives at 2.475 GHz
-and saves the raw IQ stream as `.complex16s`.
-The files contain **multiple complete 24-byte frames** (论文 §4.1).
+## 録音パラメータ / Recording Parameters（全ファイル統一）
 
-## Recording Parameters (uniform across all files)
-
-- Center frequency: **2.475 GHz**
-- Sample rate: **2 Msps**
-- Receive bandwidth: **2 MHz**
+- 中心周波数 / Center frequency: **2.475 GHz**
+- サンプリングレート / Sample rate: **2 Msps**
+- 受信帯域幅 / Receive bandwidth: **2 MHz**
 - RX Gain: **20 dB**
-- Format: **interleaved signed 8-bit IQ** (1 byte/I + 1 byte/Q = **2 bytes/sample**)
-  - Note: the `.complex16s` extension is misleading — payload is actually 8-bit.
-    See comment in `../scripts/verify_signal_captures.py` for the correct decoding.
+- データ形式 / Format: **interleaved signed 8-bit IQ**（1 byte/I + 1 byte/Q = **2 bytes/sample**）
+  - 拡張子は `.complex16s` だが実体は 8-bit。`../scripts/verify_signal_captures.py` 内の
+    コメントを参照。
 
-## File List — "Operation → tail" mapping
+## ファイル一覧（操作 → tail 対応）/ File List (Operation → tail mapping)
 
-| Filename | Operation recorded | Expected tail (5 bytes) | Duration | File size |
+| ファイル / Filename | 操作 / Operation | tail (5 bytes) | 録音長 / Duration | サイズ / Size |
 |---|---|---|---:|---:|
-| `HackRF-Left forward-2_475GHz-2MSps-2MHz.complex16s`  | **Left wheel forward (LF)**  | `22 52 d8 57 80` | 4.194 s | 16,777,216 B |
-| `HackRF-Left backward-2_475GHz-2MSps-2MHz.complex16s` | **Left wheel backward (LB)** | `24 54 9a 27 00` | 4.325 s | 17,301,504 B |
-| `HackRF-Right forward-2_475GHz-2MSps-2MHz.complex16s` | **Right wheel forward (RF)** | `27 57 ff 17 00` | 3.932 s | 15,728,640 B |
-| `HackRF-Right backward-2_475GHz-2MSps-2MHz.complex16s` | **Right wheel backward (RB)** | `26 d6 4d 8f 00` | 4.260 s | 17,039,360 B |
-| `HackRF-Light-2_475GHz-2MSps-2MHz.complex16s`         | **Light**                    | `06 36 b6 47 00` | 3.473 s | 13,893,632 B |
-| `New1 HackRF-Left backward-...complex16s` | LB cropped to ~1 frame | same as LB | 0.0002 s | 782 B |
-| `New2 HackRF-Left backward-...complex16s` | LB cropped to ~1 frame | same as LB | 0.0002 s | 786 B |
+| `HackRF-Left forward-2_475GHz-2MSps-2MHz.complex16s`  | **左輪前進 / Left forward (LF)**  | `22 52 d8 57 80` | 4.194 s | 16,777,216 B |
+| `HackRF-Left backward-2_475GHz-2MSps-2MHz.complex16s` | **左輪後退 / Left backward (LB)** | `24 54 9a 27 00` | 4.325 s | 17,301,504 B |
+| `HackRF-Right forward-2_475GHz-2MSps-2MHz.complex16s` | **右輪前進 / Right forward (RF)** | `27 57 ff 17 00` | 3.932 s | 15,728,640 B |
+| `HackRF-Right backward-2_475GHz-2MSps-2MHz.complex16s` | **右輪後退 / Right backward (RB)** | `26 d6 4d 8f 00` | 4.260 s | 17,039,360 B |
+| `HackRF-Light-2_475GHz-2MSps-2MHz.complex16s`         | **ライト / Light**                | `06 36 b6 47 00` | 3.473 s | 13,893,632 B |
+| `New1 HackRF-Left backward-...complex16s` | LB 切片（約 1 フレーム）/ LB cropped (~1 frame) | LB と同じ | 0.0002 s | 782 B |
+| `New2 HackRF-Left backward-...complex16s` | LB 切片（約 1 フレーム）/ LB cropped (~1 frame) | LB と同じ | 0.0002 s | 786 B |
 
+> `New1` / `New2` は LB 録音から切り出した単一フレーム規模のスニペットです。
+> 論文では直接引用されていませんが、切り出し作業の中間生成物として保管しています。
 > The `New1` / `New2` files are sub-frame snippets cut from the LB recording during early
-> slicing experiments. They are **not directly cited in the paper** but are kept here as
-> intermediate cropping artifacts.
+> slicing experiments. Not directly cited in the paper.
 
-## Recording Date
+## 録音日 / Recording Date
 
-2025-07-16 (HackRF timestamps).
+2025-07-16 (HackRF タイムスタンプ / HackRF timestamps)
 
-## SHA-256 Integrity
-
-See `checksums.sha256` in this folder. Verify with:
+## SHA-256 完整性確認 / Integrity
 
 ```bash
 shasum -a 256 -c checksums.sha256
 ```
 
-## How to Read These IQ Files
+## IQ ファイルの読み込み / How to Read
 
 ```python
 import numpy as np

@@ -1,47 +1,49 @@
-# urh_project/ — URH Project File (Demodulation & Alignment Settings)
+# urh_project/ — URH プロジェクトファイル / URH Project File
 
-## What this folder contains
+## このフォルダの内容 / What this folder contains
 
-`URHProject.xml` is the **Universal Radio Hacker (URH) v2.10.0** project file
-saved after opening the primary IQ recording
-(`../iq_captures_1s/HackRF-Left backward-2_475GHz-2MSps-2MHz.complex16s` and others)
-and configuring the FSK demodulation parameters.
+`URHProject.xml` は **Universal Radio Hacker (URH) v2.10.0** で主録音
+（`../iq_captures_1s/HackRF-Left backward-2_475GHz-2MSps-2MHz.complex16s` 等）を
+開いて FSK 復調パラメータを設定した状態を保存したプロジェクトファイルです。
 
-論文 表2 (測定・復調パラメータ) describes
-"フレーム整列基準 = プリアンブル検出点を基準に切り出し（URH 上で固定）" —
-the fixed URH parameters referenced there are stored in this XML.
+論文 表 2（測定・復調パラメータ）の
+"フレーム整列基準 = プリアンブル検出点を基準に切り出し（URH 上で固定）"
+が指す URH パラメータが本 XML に格納されています。
 
-## Key Parameters (signal element)
+URH v2.10.0 project file capturing the FSK demodulation parameters used after loading
+the primary IQ recording. Corresponds to 論文 表 2.
 
-| Item | Value |
+## 主要パラメータ / Key Parameters (signal element)
+
+| 項目 / Item | 値 / Value |
 |---|---:|
-| Modulation | FSK |
+| 変調方式 / Modulation | FSK |
 | Bits per symbol | 1 |
 | Samples per symbol | 2 |
-| Sample rate (URH internal) | 1,000,000 Hz |
+| Sample rate (URH 内 / internal) | 1,000,000 Hz |
 | Pause threshold | 8 |
 | Noise threshold | 1.4143 |
 | Costas loop bandwidth | 0.1 |
 
-## Supported Decodings
+## サポート復号 / Supported Decodings
 
-URH project enables:
 `Non Return To Zero (NRZ)` / `NRZ + Invert` / `Manchester I` / `Manchester II` / `Differential Manchester`
 
-## Notes / Caveats
+## 注意事項 / Notes
 
-- The `<device_conf>` block stores `frequency=433920000` and `name=USRP` — these are URH's
-  default values, **not** the parameters used for capture. The actual recordings were made
-  with **HackRF One @ 2.475 GHz** via standalone tools (e.g. `hackrf_transfer`); see
-  `../iq_captures_1s/README.md`.
-- This XML primarily records the demodulation/analysis settings applied **after** loading the
-  IQ files into URH.
+- `<device_conf>` 内 `frequency=433920000`、`name=USRP` は URH のデフォルト値で、
+  実際の取得には使用されていません。録音は **HackRF One @ 2.475 GHz** で `hackrf_transfer`
+  等を介して独立に行われました（`../iq_captures_1s/README.md` 参照）。
+- 本 XML は IQ ファイル読み込み**後**に URH 上で適用された解析設定を主に保存しています。
 
-## How to Reproduce
+The `<device_conf>` block stores `name=USRP` and `frequency=433920000` (URH defaults),
+**not** the parameters used for capture. Actual recordings used HackRF + 2.475 GHz via
+standalone tools (e.g. `hackrf_transfer`).
 
-1. Install URH v2.10.0.
-2. Open URH → `Project → Open` → select `URHProject.xml`.
-3. URH references IQ files via the relative path `Data/HackRF-...complex16s`.
-   Either:
-   - Copy the files from `../iq_captures_1s/` into a `Data/` subdirectory next to this XML, or
-   - Edit each `<signal filename="...">` and `<open_file name="...">` to point to absolute paths.
+## 再現方法 / How to Reproduce
+
+1. URH v2.10.0 をインストール / Install URH v2.10.0
+2. URH を起動 → `Project → Open` → `URHProject.xml` を選択
+3. URH は IQ ファイルを相対パス `Data/HackRF-...complex16s` で参照するため:
+   - `../iq_captures_1s/` 内の IQ ファイルを本 XML 横の `Data/` サブディレクトリへコピー、または
+   - 各 `<signal filename="...">` および `<open_file name="...">` を絶対パスに編集
